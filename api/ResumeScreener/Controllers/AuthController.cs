@@ -25,7 +25,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
-        // Check if email already exists
+        
         var existingUser = _context.Users
             .FirstOrDefault(x => x.Email == dto.Email);
 
@@ -33,12 +33,10 @@ public class AuthController : ControllerBase
         {
             return BadRequest("Email already exists");
         }
-
-        // Hash password
+      
         string hashedPassword =
             BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-        // Create user
         var user = new User
         {
             FullName = dto.FullName,
@@ -76,7 +74,6 @@ public class AuthController : ControllerBase
             return Unauthorized("Invalid email or password");
         }
 
-        // Claims
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, user.FullName),
@@ -84,7 +81,7 @@ public class AuthController : ControllerBase
             new Claim(ClaimTypes.Role, user.Role)
         };
 
-        // Secret key
+
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(
                 _configuration["Jwt:Key"]!
@@ -96,7 +93,7 @@ public class AuthController : ControllerBase
             SecurityAlgorithms.HmacSha256
         );
 
-        // Token
+
         var token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
