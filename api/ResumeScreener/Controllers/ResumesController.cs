@@ -175,11 +175,21 @@ public class ResumesController : ControllerBase
             );
         }
 
+        //calculating score
         var score = _scoringService
             .CalculateScore(
                 resume,
                 jobSkills
             );
+
+        //remove old score
+        var existingScore = _context.Scores
+            .FirstOrDefault(x => x.ResumeId == id);
+
+        if (existingScore != null)
+        {
+            _context.Scores.Remove(existingScore);
+        }
 
         _context.Scores.Add(score);
 
