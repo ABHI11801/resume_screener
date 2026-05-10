@@ -128,4 +128,37 @@ public class JobsController : ControllerBase
 
         return Ok(skills);
     }
+
+    //ranking
+    [Authorize]
+    [HttpGet("{jobId}/rankings")]
+    public IActionResult GetRankings(int jobId)
+    {
+        var rankings = (
+            from score in _context.Scores
+            join resume in _context.Resumes
+                on score.ResumeId equals resume.Id
+
+            where score.JobId == jobId
+
+            orderby score.TotalScore descending
+
+            select new
+            {
+                resume.Id,
+                resume.CandidateName,
+                resume.Email,
+
+                score.TotalScore,
+
+                score.MatchedSkills,
+
+                score.MissingSkills,
+
+                score.Explanation
+            }
+        ).ToList();
+
+        return Ok(rankings);
+    }
 }
