@@ -14,6 +14,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<JobSkill> JobSkills => Set<JobSkill>();
     public DbSet<Resume> Resumes => Set<Resume>();
     public DbSet<Score> Scores => Set<Score>();
+    public DbSet<Interview> Interviews => Set<Interview>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
