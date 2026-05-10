@@ -13,11 +13,13 @@ public class ResumesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly PdfService _pdfService;
+    private readonly ScoringService _scoringService;
 
-    public ResumesController(ApplicationDbContext context,PdfService pdfService)
+    public ResumesController(ApplicationDbContext context,PdfService pdfService,ScoringService scoringService)
     {
         _context = context;
         _pdfService = pdfService;
+        _scoringService = scoringService;
     }
 
     [Authorize(Roles = "Admin,HR")]
@@ -137,6 +139,61 @@ public class ResumesController : ControllerBase
         {
             message = "Resume parsed successfully",
             parsedCharacters = extractedText.Length
+        });
+    }
+
+    [Authorize(Roles = "Admin,HR")]
+    [HttpPost("{id}/score")]
+    public async Task<IActionResult> ScoreResume(int id)
+    {
+
+        var resume = _context.Resumes
+            .FirstOrDefault(x => x.Id == id);
+
+        if (resume == null)
+        {
+            return NotFound("Resume not found");
+        }
+
+
+        if (string.IsNullOrWhiteSpace(
+            resume.ParsedText))
+        {
+            return BadRequest(
+                "Resume must be parsed first"
+            );
+        }
+
+        var jobSkills = _context.JobSkills
+            .Where(x => x.JobId == resume.JobId)
+            .ToList();
+
+        if (!jobSkills.Any())
+        {
+            return BadRequest(
+                "No skills found for this job"
+            );
+        }
+
+        var score = _scoringService
+            .CalculateScore(
+                resume,
+                jobSkills
+            );
+
+        _context.Scores.Add(score);
+
+        resume.Status = "Screened";
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new
+        {
+            message = "Resume scored successfully",
+            score = score.TotalScore,
+            matchedSkills = score.MatchedSkills,
+            missingSkills = score.MissingSkills,
+            explanation = score.Explanation
         });
     }
 }

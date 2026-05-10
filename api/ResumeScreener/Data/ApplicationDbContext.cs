@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<JobSkill> JobSkills => Set<JobSkill>();
     public DbSet<Resume> Resumes => Set<Resume>();
+    public DbSet<Score> Scores => Set<Score>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -31,6 +32,10 @@ public class ApplicationDbContext : DbContext
 
         builder.Entity<Job>()
         .Property(j => j.MinimumScore)
+        .HasPrecision(5, 2);
+
+        builder.Entity<Score>()
+        .Property(x => x.TotalScore)
         .HasPrecision(5, 2);
     }
 }
