@@ -1,22 +1,33 @@
 bin/
 obj/
+dist/
+.angular/
+node_modules/
+
 .vs/
+.vscode/
+.idea/
 *.user
 *.suo
 
-appsettings.Development.json
-
-node_modules/
-dist/
-
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+appsettings.Development.json
+.env
+
+src/environments/environment*.ts
+
+
+Uploads/
+
 
 .DS_Store
 Thumbs.db
 
-.vscode/
-.idea/
+coverage/
 
-Uploads/
-
-.env
+tmp/
+temp/
