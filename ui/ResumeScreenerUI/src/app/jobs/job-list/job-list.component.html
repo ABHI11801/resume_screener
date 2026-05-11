@@ -1,0 +1,40 @@
+<div class="jobs-container">
+
+  <h2>Jobs</h2>
+
+  <div *ngIf="isLoading">
+    Loading jobs...
+  </div>
+
+  <table *ngIf="!isLoading">
+
+    <thead>
+
+      <tr>
+        <th>Title</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Minimum Score</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let job of jobs">
+
+        <td>{{ job.title }}</td>
+
+        <td>{{ job.department }}</td>
+
+        <td>{{ job.status }}</td>
+
+        <td>{{ job.minimumScore }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

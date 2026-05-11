@@ -1,16 +1,7 @@
 <mat-toolbar color="primary">
-
   <span>Resume Screener</span>
-
   <span class="spacer"></span>
-
-  <button
-    mat-button
-    (click)="logout()">
-
-    Logout
-
-  </button>
+  <button mat-button (click)="logout()">Logout </button>
 
 </mat-toolbar>
 
@@ -23,26 +14,11 @@
 
     <mat-nav-list>
 
-      <a mat-list-item routerLink="/dashboard">
-        Dashboard
-      </a>
-
-      <a mat-list-item>
-        Jobs
-      </a>
-
-      <a mat-list-item>
-        Resumes
-      </a>
-
-      <a mat-list-item>
-        Rankings
-      </a>
-
-      <a mat-list-item>
-        Interviews
-      </a>
-
+      <a mat-list-item routerLink="/dashboard"> Dashboard </a>
+      <a mat-list-item routerLink="/jobs"> Jobs </a>
+      <a mat-list-item>Resumes</a>
+      <a mat-list-item>Rankings</a>
+      <a mat-list-item>Interviews</a>
     </mat-nav-list>
 
   </mat-sidenav>
@@ -51,11 +27,7 @@
 
     <div class="content">
 
-      <h2>Welcome to Resume Screener</h2>
-
-      <p>
-        AI Resume Screening Dashboard
-      </p>
+    <router-outlet></router-outlet>
 
     </div>
 
