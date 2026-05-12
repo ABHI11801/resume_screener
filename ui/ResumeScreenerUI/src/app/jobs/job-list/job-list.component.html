@@ -1,40 +1,60 @@
-<div class="jobs-container">
+<div class="jobs-page">
 
-  <h2>Jobs</h2>
+  <div class="jobs-header">
 
-  <div *ngIf="isLoading">
-    Loading jobs...
+    <h2>Jobs</h2>
+
+    <button
+      class="add-job-btn">
+
+      + Add Job
+
+    </button>
+
   </div>
 
-  <table *ngIf="!isLoading">
+  <div
+    class="jobs-grid"
 
-    <thead>
+    *ngIf="jobs.length > 0">
 
-      <tr>
-        <th>Title</th>
-        <th>Department</th>
-        <th>Status</th>
-        <th>Minimum Score</th>
-      </tr>
+    <div
+      class="job-card"
 
-    </thead>
+      *ngFor="let job of jobs">
 
-    <tbody>
+      <h3>
+        {{ job.title }}
+      </h3>
 
-      <tr *ngFor="let job of jobs">
+      <p>
+        Department:
+        {{ job.department }}
+      </p>
 
-        <td>{{ job.title }}</td>
+      <p>
+        Status:
+        {{ job.status }}
+      </p>
 
-        <td>{{ job.department }}</td>
+      <p>
+        Minimum Score:
+        {{ job.minimumScore }}
+      </p>
 
-        <td>{{ job.status }}</td>
+      <button
+        class="view-btn">
 
-        <td>{{ job.minimumScore }}</td>
+        View Candidates
 
-      </tr>
+      </button>
 
-    </tbody>
+    </div>
 
-  </table>
+  </div>
+
+  <p *ngIf="jobs.length === 0">
+    No jobs found
+  </p>
 
 </div>

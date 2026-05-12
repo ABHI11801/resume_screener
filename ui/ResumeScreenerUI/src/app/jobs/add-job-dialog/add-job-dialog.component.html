@@ -1,0 +1,116 @@
+<h2 mat-dialog-title>
+  Add Job
+</h2>
+
+<mat-dialog-content>
+
+  <form [formGroup]="jobForm">
+
+    <mat-form-field
+      appearance="outline">
+
+      <mat-label>
+        Job Title
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="title">
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline">
+
+      <mat-label>
+        Department
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="department">
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline">
+
+      <mat-label>
+        Description
+      </mat-label>
+
+      <textarea
+        matInput
+        rows="4"
+        formControlName="description">
+      </textarea>
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline">
+
+      <mat-label>
+        Minimum Score
+      </mat-label>
+
+      <input
+        type="number"
+        matInput
+        formControlName="minimumScore">
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline">
+
+      <mat-label>
+        Status
+      </mat-label>
+
+      <mat-select
+        formControlName="status">
+
+        <mat-option value="Open">
+          Open
+        </mat-option>
+
+        <mat-option value="Closed">
+          Closed
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    mat-dialog-close>
+
+    Cancel
+
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+
+    (click)="submit()"
+
+    [disabled]="isLoading">
+
+    {{
+      isLoading
+        ? 'Creating...'
+        : 'Create Job'
+    }}
+
+  </button>
+
+</mat-dialog-actions>

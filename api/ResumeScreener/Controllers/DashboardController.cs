@@ -29,18 +29,48 @@ public class DashboardController : ControllerBase
         var totalInterviews =
             _context.Interviews.Count();
 
-        var topScore =
-            _context.Scores
-                .OrderByDescending(x => x.TotalScore)
-                .Select(x => x.TotalScore)
-                .FirstOrDefault();
+        var totalScreenedCandidates =
+            _context.Scores.Count();
 
+
+        var upcomingInterviews =
+        (
+            from interview in _context.Interviews
+
+            join resume in _context.Resumes
+                on interview.ResumeId equals resume.Id
+
+            join job in _context.Jobs
+                on interview.JobId equals job.Id
+
+            where interview.InterviewDate >= DateTime.UtcNow
+
+            orderby interview.InterviewDate
+
+            select new
+            {
+                candidateName =
+                    resume.CandidateName,
+
+                jobTitle =
+                    job.Title,
+
+                interviewDate =
+                    interview.InterviewDate,
+
+                status =
+                    interview.Status
+            }
+        )
+        .Take(5)
+        .ToList();
         return Ok(new
         {
             totalJobs,
             totalResumes,
             totalInterviews,
-            topCandidateScore = topScore
+            totalScreenedCandidates,
+            upcomingInterviews
         });
     }
 }

@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule }from '@angular/common';
-import { MatCardModule} from '@angular/material/card';
+import {  MatCardModule} from '@angular/material/card';
+import { DashboardService }from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard-page',
+
   standalone: true,
+
   imports: [
     CommonModule,
     MatCardModule
@@ -17,13 +20,55 @@ import { MatCardModule} from '@angular/material/card';
     './dashboard-page.component.scss'
   ]
 })
-export class DashboardPageComponent {
+export class DashboardPageComponent
+implements OnInit {
 
-  totalJobs = 12;
+  totalJobs = 0;
+  totalResumes = 0;
+  totalInterviews = 0;
+  totalScreenedCandidates = 0;
+  upcomingInterviews: any[] = [];
 
-  totalResumes = 34;
+  constructor(
+    private dashboardService:
+      DashboardService
+  )
+  {
+  }
 
-  totalInterviews = 8;
+  ngOnInit(): void
+  {
+    this.loadStats();
+  }
 
-  topScore = 92;
+  loadStats(): void
+  {
+    this.dashboardService
+      .getStats()
+      .subscribe({
+
+        next: (response) =>
+        {
+          this.totalJobs =
+            response.totalJobs;
+
+          this.totalResumes =
+            response.totalResumes;
+
+          this.totalInterviews =
+            response.totalInterviews;
+
+          this.totalScreenedCandidates =
+            response.totalScreenedCandidates;
+
+          this.upcomingInterviews =
+            response.upcomingInterviews;
+        },
+
+        error: (error) =>
+        {
+          console.error(error);
+        }
+      });
+  }
 }

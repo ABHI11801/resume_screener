@@ -30,12 +30,63 @@
 
     <mat-card class="dashboard-card">
 
-      <h3>Top Candidate Score</h3>
+      <h3>Total Screened Candidates</h3>
 
-      <p>{{ topScore }}%</p>
+      <p>{{ totalScreenedCandidates  }}</p>
 
     </mat-card>
 
   </div>
+  <div class="interviews-section">
+
+  <h2>Upcoming Interviews</h2>
+
+  <div
+    class="interview-grid"
+
+    *ngIf="
+      upcomingInterviews &&
+      upcomingInterviews.length > 0
+    ">
+
+    <mat-card
+      class="interview-card"
+
+      *ngFor="
+        let interview
+        of upcomingInterviews
+      ">
+
+      <h3>
+        {{ interview.candidateName }}
+      </h3>
+
+      <p>
+        {{ interview.jobTitle }}
+      </p>
+
+      <p>
+        {{
+          interview.interviewDate
+            | date:'medium'
+        }}
+      </p>
+
+      <p>
+        Status:
+        {{ interview.status }}
+      </p>
+
+    </mat-card>
+
+  </div>
+
+  <p *ngIf="
+    upcomingInterviews.length === 0
+  ">
+    No upcoming interviews
+  </p>
+
+</div>
 
 </div>
