@@ -3,8 +3,10 @@ import {FormBuilder,ReactiveFormsModule,Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-@Component({selector: 'app-login',standalone: true,imports: [CommonModule,ReactiveFormsModule],templateUrl: './login.component.html',
+@Component({selector: 'app-login',standalone: true,imports: [CommonModule,ReactiveFormsModule,MatIconModule,MatProgressSpinnerModule],templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']})
 export class LoginComponent {
   isLoading = false;

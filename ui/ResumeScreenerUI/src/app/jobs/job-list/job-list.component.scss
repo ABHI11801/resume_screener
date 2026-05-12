@@ -1,63 +1,233 @@
+$primary: #4f46e5;
+$primary-light: #ede9fe;
+
 .jobs-page {
-  padding: 20px;
+  padding: 28px 32px;
+  background: #f9fafb;
+  min-height: 100%;
 }
 
+// Header
 .jobs-header {
   display: flex;
-
   justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
 
-  align-items: center;
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
 
-  margin-bottom: 20px;
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
 }
 
 .add-job-btn {
-  padding: 10px 16px;
-
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: $primary;
+  color: white;
   border: none;
-
   border-radius: 8px;
-
+  font-size: 13.5px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.15s;
 
-  font-weight: bold;
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover { background: #3730a3; }
+  &:active { transform: scale(0.98); }
 }
 
+// Grid
 .jobs-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(280px, 1fr));
-
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
 }
 
+// Job card
 .job-card {
-  padding: 20px;
-
-  border-radius: 12px;
-
   background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.15s, box-shadow 0.15s;
 
-  box-shadow:
-    0 2px 8px rgba(0,0,0,0.1);
+  &:hover {
+    border-color: #c7d2fe;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
+  }
 }
 
-.job-card h3 {
-  margin-bottom: 15px;
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.job-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: $primary-light;
+  color: $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+// Status badge
+.status-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+
+  &.active, &.open {
+    background: #f0fdf4;
+    color: #16a34a;
+  }
+  &.closed, &.inactive {
+    background: #fef2f2;
+    color: #dc2626;
+  }
+  &.draft, &.pending {
+    background: #fffbeb;
+    color: #d97706;
+  }
+}
+
+.job-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 6px;
+}
+
+.job-dept {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 0 0 14px;
+
+  .meta-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.job-meta {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 14px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .meta-label {
+    font-size: 11px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
 }
 
 .view-btn {
-  margin-top: 15px;
-
+  margin-top: auto;
   width: 100%;
-
-  padding: 10px;
-
-  border: none;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
-
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
   cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+  .btn-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    transition: transform 0.15s;
+  }
+
+  &:hover {
+    background: #f5f3ff;
+    border-color: #c7d2fe;
+    color: $primary;
+
+    .btn-icon { transform: translateX(3px); }
+  }
+}
+
+// Empty state
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0;
+  color: #9ca3af;
+  text-align: center;
+
+  mat-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 12px;
+    color: #d1d5db;
+  }
+
+  p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 0 0 4px;
+  }
+
+  span {
+    font-size: 13px;
+  }
 }

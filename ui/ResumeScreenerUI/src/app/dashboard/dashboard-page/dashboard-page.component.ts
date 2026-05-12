@@ -2,6 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { CommonModule }from '@angular/common';
 import {  MatCardModule} from '@angular/material/card';
 import { DashboardService }from '../../services/dashboard.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -10,7 +12,9 @@ import { DashboardService }from '../../services/dashboard.service';
 
   imports: [
     CommonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule,
+    MatDividerModule,
   ],
 
   templateUrl:

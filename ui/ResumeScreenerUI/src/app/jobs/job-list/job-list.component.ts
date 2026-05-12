@@ -3,13 +3,14 @@ import { CommonModule }from '@angular/common';
 import { JobService }from '../../services/job.service';
 import {MatDialog,MatDialogModule} from '@angular/material/dialog';
 import { AddJobDialogComponent} from '../add-job-dialog/add-job-dialog.component';
-
+import {  RouterLink,RouterModule} from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-job-list',
 
   standalone: true,
 
-  imports: [CommonModule,MatDialogModule],
+  imports: [CommonModule,MatDialogModule,RouterLink,MatIconModule,RouterModule],
 
   templateUrl: './job-list.component.html',
 

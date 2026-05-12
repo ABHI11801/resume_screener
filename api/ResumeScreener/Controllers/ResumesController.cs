@@ -159,9 +159,20 @@ public class ResumesController : ControllerBase
         if (string.IsNullOrWhiteSpace(
             resume.ParsedText))
         {
-            return BadRequest(
-                "Resume must be parsed first"
+            var fullPath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                resume.ResumeFilePath
             );
+
+            if (!System.IO.File.Exists(fullPath))
+            {
+                return NotFound(
+                    "Resume file missing"
+                );
+            }
+
+            resume.ParsedText =
+                _pdfService.ExtractText(fullPath);
         }
 
         var jobSkills = _context.JobSkills

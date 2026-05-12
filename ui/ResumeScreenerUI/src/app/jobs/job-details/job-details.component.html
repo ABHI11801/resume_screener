@@ -1,0 +1,106 @@
+<div class="job-details-page">
+
+  <!-- Loading -->
+  <div class="loading-state" *ngIf="isLoading">
+    <mat-spinner diameter="32"></mat-spinner>
+    <p>Loading job details...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading && job">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <button class="back-btn" routerLink="/jobs">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>
+          <p class="section-label">Job Details</p>
+          <h2 class="section-title">{{ job.title }}</h2>
+        </div>
+      </div>
+      <button class="upload-btn" (click)="openUploadDialog()">
+        <mat-icon>upload_file</mat-icon>
+        Upload Resume
+      </button>
+    </div>
+
+    <!-- Job meta -->
+    <div class="job-meta-bar">
+      <div class="meta-chip">
+        <mat-icon>corporate_fare</mat-icon>
+        {{ job.department }}
+      </div>
+      <div class="meta-chip">
+        <mat-icon>speed</mat-icon>
+        Min. score: {{ job.minimumScore }}
+      </div>
+      <span class="status-badge" [ngClass]="job.status | lowercase">
+        {{ job.status }}
+      </span>
+    </div>
+
+    <!-- Description -->
+    <div class="job-description" *ngIf="job.description">
+      <p>{{ job.description }}</p>
+    </div>
+
+    <mat-divider class="section-divider"></mat-divider>
+
+    <!-- Candidates section -->
+    <div class="candidates-header">
+      <div>
+        <p class="section-label">Applications</p>
+        <h3 class="section-title">
+          Candidates
+          <span class="count-badge">{{ candidates.length }}</span>
+        </h3>
+      </div>
+    </div>
+
+    <!-- Candidate grid -->
+    <div class="candidate-grid" *ngIf="candidates.length > 0">
+      <div class="candidate-card" *ngFor="let candidate of candidates">
+
+        <div class="card-top">
+          <div class="candidate-avatar">
+            {{ candidate.candidateName.substring(0, 2).toUpperCase() }}
+          </div>
+          <span class="status-badge" [ngClass]="candidate.status | lowercase">
+            {{ candidate.status }}
+          </span>
+        </div>
+
+        <h4 class="candidate-name">{{ candidate.candidateName }}</h4>
+        <p class="candidate-email">
+          <mat-icon class="meta-icon">mail_outline</mat-icon>
+          {{ candidate.email }}
+        </p>
+
+        <div class="card-actions">
+          <button class="action-btn outline" (click)="viewResume(candidate)">
+            <mat-icon>description</mat-icon>
+            View resume
+          </button>
+          <button
+            class="action-btn primary"
+            *ngIf="candidate.status !== 'Screened'"
+            (click)="scoreCandidate(candidate.id)">
+            <mat-icon>auto_awesome</mat-icon>
+            Score
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="candidates.length === 0">
+      <mat-icon>person_search</mat-icon>
+      <p>No candidates yet</p>
+      <span>Upload a resume to start screening</span>
+    </div>
+
+  </ng-container>
+
+</div>

@@ -28,4 +28,16 @@ export class JobService {
       data
     );
   }
+  getJobById(id: number)
+  {
+    return this.http.get(
+      `${this.apiUrl}/${id}`
+    );
+  }
+  getCandidates(jobId: number)
+  {
+    return this.http.get(
+      `${this.apiUrl}/${jobId}/candidates`
+    );
+  }
 }

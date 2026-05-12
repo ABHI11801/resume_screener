@@ -1,17 +1,16 @@
-import { Component }from '@angular/core';
+import { Component, Inject }from '@angular/core';
 import { CommonModule }from '@angular/common';
+import {  MAT_DIALOG_DATA,  MatDialogModule,  MatDialogRef} from '@angular/material/dialog';
 import {  ReactiveFormsModule,  FormBuilder,  Validators} from '@angular/forms';
-import {  MatDialogModule,  MatDialogRef} from '@angular/material/dialog';
 import {  MatFormFieldModule} from '@angular/material/form-field';
 import {  MatInputModule} from '@angular/material/input';
 import {  MatButtonModule} from '@angular/material/button';
-import {  MatSelectModule} from '@angular/material/select';
-import { JobService }from '../../services/job.service';
+import { ResumeService }from '../../services/resume.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 @Component({
-  selector: 'app-add-job-dialog',
+  selector:
+    'app-upload-resume-dialog',
 
   standalone: true,
 
@@ -23,78 +22,97 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule,
     MatIconModule,
     MatProgressSpinnerModule
   ],
 
   templateUrl:
-    './add-job-dialog.component.html',
+    './upload-resume-dialog.component.html',
 
   styleUrls: [
-    './add-job-dialog.component.scss'
+    './upload-resume-dialog.component.scss'
   ]
 })
-export class AddJobDialogComponent {
+export class UploadResumeDialogComponent {
+
+  selectedFile: File | null = null;
 
   isLoading = false;
 
-  jobForm;
+  form;
 
   constructor(
     private fb: FormBuilder,
 
-    private jobService:
-      JobService,
+    private resumeService:
+      ResumeService,
 
     private dialogRef:
       MatDialogRef<
-        AddJobDialogComponent
-      >
+        UploadResumeDialogComponent
+      >,
+
+    @Inject(MAT_DIALOG_DATA)
+    public data: any
   )
   {
-    this.jobForm = this.fb.group({
+    this.form = this.fb.group({
 
-      title: [
+      candidateName: [
         '',
         Validators.required
       ],
 
-      department: [
+      email: [
         '',
-        Validators.required
-      ],
-
-      description: [
-        '',
-        Validators.required
-      ],
-
-      minimumScore: [
-        50,
-        Validators.required
-      ],
-
-      status: [
-        'Open',
         Validators.required
       ]
     });
   }
 
+  onFileSelected(event: any): void
+  {
+    this.selectedFile =
+      event.target.files[0];
+  }
+
   submit(): void
   {
-    if (this.jobForm.invalid)
+    if (
+      this.form.invalid ||
+      !this.selectedFile
+    )
     {
       return;
     }
 
+    const formData =
+      new FormData();
+
+    formData.append(
+      'candidateName',
+      this.form.value.candidateName!
+    );
+
+    formData.append(
+      'email',
+      this.form.value.email!
+    );
+
+    formData.append(
+      'jobId',
+      this.data.jobId.toString()
+    );
+
+    formData.append(
+      'resumeFile',
+      this.selectedFile
+    );
+
     this.isLoading = true;
 
-    this.jobService
-      .createJob(
-        this.jobForm.value
-      )
+    this.resumeService
+      .uploadResume(formData)
       .subscribe({
 
         next: () =>

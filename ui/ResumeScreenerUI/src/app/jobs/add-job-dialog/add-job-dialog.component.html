@@ -1,116 +1,73 @@
-<h2 mat-dialog-title>
-  Add Job
-</h2>
+<div class="dialog-header">
+  <div class="dialog-icon">
+    <mat-icon>work_outline</mat-icon>
+  </div>
+  <div>
+    <h2 class="dialog-title">Add Job</h2>
+    <p class="dialog-sub">Fill in the details to create a new job posting.</p>
+  </div>
+</div>
 
-<mat-dialog-content>
-
+<mat-dialog-content class="dialog-content">
   <form [formGroup]="jobForm">
 
-    <mat-form-field
-      appearance="outline">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Job title</label>
+        <mat-form-field appearance="outline" class="form-field">
+          <input matInput formControlName="title" placeholder="e.g. Senior Backend Engineer">
+          <mat-error *ngIf="jobForm.get('title')?.hasError('required')">Title is required</mat-error>
+        </mat-form-field>
+      </div>
 
-      <mat-label>
-        Job Title
-      </mat-label>
+      <div class="form-group">
+        <label class="form-label">Department</label>
+        <mat-form-field appearance="outline" class="form-field">
+          <input matInput formControlName="department" placeholder="e.g. Engineering">
+          <mat-error *ngIf="jobForm.get('department')?.hasError('required')">Department is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
 
-      <input
-        matInput
-        formControlName="title">
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <mat-form-field appearance="outline" class="form-field">
+        <textarea
+          matInput
+          rows="4"
+          formControlName="description"
+          placeholder="Describe the role, responsibilities, and requirements...">
+        </textarea>
+      </mat-form-field>
+    </div>
 
-    </mat-form-field>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Minimum score</label>
+        <mat-form-field appearance="outline" class="form-field">
+          <input type="number" matInput formControlName="minimumScore" placeholder="0–100">
+          <mat-icon matSuffix style="font-size:16px;color:#9ca3af">speed</mat-icon>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field
-      appearance="outline">
-
-      <mat-label>
-        Department
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="department">
-
-    </mat-form-field>
-
-    <mat-form-field
-      appearance="outline">
-
-      <mat-label>
-        Description
-      </mat-label>
-
-      <textarea
-        matInput
-        rows="4"
-        formControlName="description">
-      </textarea>
-
-    </mat-form-field>
-
-    <mat-form-field
-      appearance="outline">
-
-      <mat-label>
-        Minimum Score
-      </mat-label>
-
-      <input
-        type="number"
-        matInput
-        formControlName="minimumScore">
-
-    </mat-form-field>
-
-    <mat-form-field
-      appearance="outline">
-
-      <mat-label>
-        Status
-      </mat-label>
-
-      <mat-select
-        formControlName="status">
-
-        <mat-option value="Open">
-          Open
-        </mat-option>
-
-        <mat-option value="Closed">
-          Closed
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-select formControlName="status">
+            <mat-option value="Open">Open</mat-option>
+            <mat-option value="Closed">Closed</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
 
   </form>
-
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-
-  <button
-    mat-button
-    mat-dialog-close>
-
-    Cancel
-
+<mat-dialog-actions class="dialog-actions">
+  <button class="btn-cancel" mat-dialog-close>Cancel</button>
+  <button class="btn-submit" (click)="submit()" [disabled]="isLoading">
+    <mat-spinner *ngIf="isLoading" diameter="15"></mat-spinner>
+    <span>{{ isLoading ? 'Creating...' : 'Create job' }}</span>
   </button>
-
-  <button
-    mat-raised-button
-    color="primary"
-
-    (click)="submit()"
-
-    [disabled]="isLoading">
-
-    {{
-      isLoading
-        ? 'Creating...'
-        : 'Create Job'
-    }}
-
-  </button>
-
 </mat-dialog-actions>

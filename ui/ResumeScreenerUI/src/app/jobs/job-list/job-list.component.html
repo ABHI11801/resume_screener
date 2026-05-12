@@ -1,60 +1,53 @@
 <div class="jobs-page">
 
   <div class="jobs-header">
-
-    <h2>Jobs</h2>
-
-    <button
-      class="add-job-btn">
-
-      + Add Job
-
+    <div>
+      <p class="section-label">Manage</p>
+      <h2 class="section-title">Jobs</h2>
+    </div>
+    <button class="add-job-btn" (click)="openAddJobDialog()">
+      <mat-icon>add</mat-icon>
+      Add Job
     </button>
-
   </div>
 
-  <div
-    class="jobs-grid"
+  <div class="jobs-grid" *ngIf="jobs.length > 0">
+    <div class="job-card" *ngFor="let job of jobs">
 
-    *ngIf="jobs.length > 0">
+      <div class="job-card-header">
+        <div class="job-icon">
+          <mat-icon>work_outline</mat-icon>
+        </div>
+        <span class="status-badge" [ngClass]="job.status | lowercase">
+          {{ job.status }}
+        </span>
+      </div>
 
-    <div
-      class="job-card"
-
-      *ngFor="let job of jobs">
-
-      <h3>
-        {{ job.title }}
-      </h3>
-
-      <p>
-        Department:
+      <h3 class="job-title">{{ job.title }}</h3>
+      <p class="job-dept">
+        <mat-icon class="meta-icon">corporate_fare</mat-icon>
         {{ job.department }}
       </p>
 
-      <p>
-        Status:
-        {{ job.status }}
-      </p>
+      <div class="job-meta">
+        <div class="meta-item">
+          <span class="meta-label">Min. score</span>
+          <span class="meta-value">{{ job.minimumScore }}</span>
+        </div>
+      </div>
 
-      <p>
-        Minimum Score:
-        {{ job.minimumScore }}
-      </p>
-
-      <button
-        class="view-btn">
-
-        View Candidates
-
+      <button class="view-btn" [routerLink]="['/jobs', job.id]">
+        View candidates
+        <mat-icon class="btn-icon">arrow_forward</mat-icon>
       </button>
 
     </div>
-
   </div>
 
-  <p *ngIf="jobs.length === 0">
-    No jobs found
-  </p>
+  <div class="empty-state" *ngIf="jobs.length === 0">
+    <mat-icon>work_off</mat-icon>
+    <p>No jobs found</p>
+    <span>Add your first job to get started</span>
+  </div>
 
 </div>

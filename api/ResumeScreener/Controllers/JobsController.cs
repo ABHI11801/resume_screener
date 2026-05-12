@@ -161,4 +161,29 @@ public class JobsController : ControllerBase
 
         return Ok(rankings);
     }
+    [Authorize]
+    [HttpGet("{jobId}/candidates")]
+    public IActionResult GetCandidates(
+        int jobId)
+    {
+        var candidates =
+            _context.Resumes
+                .Where(x => x.JobId == jobId)
+                .Select(x => new
+                {
+                    x.Id,
+
+                    x.CandidateName,
+
+                    x.Email,
+
+                    x.Status,
+
+                    x.ResumeFilePath
+                })
+                .OrderByDescending(x => x.Id)
+                .ToList();
+
+        return Ok(candidates);
+    }
 }

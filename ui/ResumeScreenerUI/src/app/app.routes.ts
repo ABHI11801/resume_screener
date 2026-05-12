@@ -4,6 +4,7 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { JobListComponent }from './jobs/job-list/job-list.component';
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
+import { JobDetailsComponent }from './jobs/job-details/job-details.component';
 
 export const routes: Routes = [
 
@@ -34,7 +35,11 @@ export const routes: Routes = [
       {
         path: 'jobs',
         component: JobListComponent
-      }
+      },
+      {
+        path: 'jobs/:id',
+        component: JobDetailsComponent
+      },
 
     ]
   },

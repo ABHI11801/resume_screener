@@ -1,92 +1,73 @@
 <div class="dashboard-container">
 
-  <h2>Dashboard</h2>
+  <p class="section-label">Overview</p>
+  <h2 class="section-title">Dashboard</h2>
+  <p class="section-sub">Here's what's happening across your pipeline today.</p>
 
-  <div class="card-grid">
-
-    <mat-card class="dashboard-card">
-
-      <h3>Total Jobs</h3>
-
-      <p>{{ totalJobs }}</p>
-
+  <div class="stat-grid">
+    <mat-card class="stat-card">
+      <div class="stat-icon blue">
+        <mat-icon>work_outline</mat-icon>
+      </div>
+      <p class="stat-label">Total jobs</p>
+      <p class="stat-value">{{ totalJobs }}</p>
     </mat-card>
 
-    <mat-card class="dashboard-card">
-
-      <h3>Total Resumes</h3>
-
-      <p>{{ totalResumes }}</p>
-
+    <mat-card class="stat-card">
+      <div class="stat-icon green">
+        <mat-icon>description</mat-icon>
+      </div>
+      <p class="stat-label">Total resumes</p>
+      <p class="stat-value">{{ totalResumes }}</p>
     </mat-card>
 
-    <mat-card class="dashboard-card">
-
-      <h3>Total Interviews</h3>
-
-      <p>{{ totalInterviews }}</p>
-
+    <mat-card class="stat-card">
+      <div class="stat-icon amber">
+        <mat-icon>event_note</mat-icon>
+      </div>
+      <p class="stat-label">Interviews</p>
+      <p class="stat-value">{{ totalInterviews }}</p>
     </mat-card>
 
-    <mat-card class="dashboard-card">
-
-      <h3>Total Screened Candidates</h3>
-
-      <p>{{ totalScreenedCandidates  }}</p>
-
+    <mat-card class="stat-card">
+      <div class="stat-icon purple">
+        <mat-icon>group</mat-icon>
+      </div>
+      <p class="stat-label">Screened candidates</p>
+      <p class="stat-value">{{ totalScreenedCandidates }}</p>
     </mat-card>
-
   </div>
+
+  <mat-divider class="section-divider"></mat-divider>
+
   <div class="interviews-section">
+    <p class="section-label">Upcoming</p>
+    <h2 class="section-title">Interviews</h2>
+    <p class="section-sub">Scheduled for the next 7 days.</p>
 
-  <h2>Upcoming Interviews</h2>
+    <div class="interview-grid" *ngIf="upcomingInterviews && upcomingInterviews.length > 0">
+      <mat-card class="interview-card" *ngFor="let interview of upcomingInterviews">
+        <div class="interview-avatar">
+          {{ interview.candidateName.substring(0, 2).toUpperCase() }}
+        </div>
+        <h3 class="int-name">{{ interview.candidateName }}</h3>
+        <p class="int-role">{{ interview.jobTitle }}</p>
+        <div class="int-meta">
+          <span class="int-row">
+            <mat-icon class="meta-icon">calendar_today</mat-icon>
+            {{ interview.interviewDate | date:'MMM d, y · h:mm a' }}
+          </span>
+        </div>
+        <span class="status-badge" [ngClass]="interview.status | lowercase">
+          {{ interview.status }}
+        </span>
+      </mat-card>
+    </div>
 
-  <div
-    class="interview-grid"
-
-    *ngIf="
-      upcomingInterviews &&
-      upcomingInterviews.length > 0
-    ">
-
-    <mat-card
-      class="interview-card"
-
-      *ngFor="
-        let interview
-        of upcomingInterviews
-      ">
-
-      <h3>
-        {{ interview.candidateName }}
-      </h3>
-
-      <p>
-        {{ interview.jobTitle }}
-      </p>
-
-      <p>
-        {{
-          interview.interviewDate
-            | date:'medium'
-        }}
-      </p>
-
-      <p>
-        Status:
-        {{ interview.status }}
-      </p>
-
-    </mat-card>
-
+    <p class="empty-state" *ngIf="upcomingInterviews?.length === 0">
+      <mat-icon>event_busy</mat-icon>
+      No upcoming interviews
+    </p>
   </div>
-
-  <p *ngIf="
-    upcomingInterviews.length === 0
-  ">
-    No upcoming interviews
-  </p>
-
-</div>
 
 </div>

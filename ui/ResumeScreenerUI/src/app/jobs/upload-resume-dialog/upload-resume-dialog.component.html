@@ -1,0 +1,65 @@
+<div class="dialog-header">
+  <div class="dialog-icon">
+    <mat-icon>upload_file</mat-icon>
+  </div>
+  <div>
+    <h2 class="dialog-title">Upload Resume</h2>
+    <p class="dialog-sub">Add a candidate and attach their resume PDF.</p>
+  </div>
+</div>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="form">
+
+    <div class="form-group">
+      <label class="form-label">Candidate name</label>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput formControlName="candidateName" placeholder="e.g. Jane Smith">
+        <mat-error *ngIf="form.get('candidateName')?.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput formControlName="email" placeholder="e.g. jane@example.com">
+        <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Resume (PDF)</label>
+      <div
+        class="file-drop-zone"
+        [class.has-file]="selectedFile"
+        (click)="fileInput.click()">
+        <input
+          #fileInput
+          type="file"
+          accept=".pdf"
+          style="display:none"
+          (change)="onFileSelected($event)">
+        <ng-container *ngIf="!selectedFile">
+          <mat-icon class="drop-icon">picture_as_pdf</mat-icon>
+          <p class="drop-label">Click to browse</p>
+          <p class="drop-sub">PDF files only</p>
+        </ng-container>
+        <ng-container *ngIf="selectedFile">
+          <mat-icon class="drop-icon selected">check_circle</mat-icon>
+          <p class="drop-label selected">{{ selectedFile.name }}</p>
+          <p class="drop-sub">{{ (selectedFile.size / 1024).toFixed(0) }} KB · Click to change</p>
+        </ng-container>
+      </div>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button class="btn-cancel" mat-dialog-close>Cancel</button>
+  <button class="btn-submit" (click)="submit()" [disabled]="isLoading">
+    <mat-spinner *ngIf="isLoading" diameter="15"></mat-spinner>
+    <span>{{ isLoading ? 'Uploading...' : 'Upload resume' }}</span>
+  </button>
+</mat-dialog-actions>

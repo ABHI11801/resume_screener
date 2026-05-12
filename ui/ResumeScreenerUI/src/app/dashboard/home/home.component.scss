@@ -1,17 +1,132 @@
+// --- Variables ---
+$primary: #4f46e5;       // indigo
+$primary-light: #ede9fe;
+$primary-dark: #3730a3;
+$sidebar-width: 240px;
+$toolbar-height: 64px;
+$text-muted: #6b7280;
+$border: #e5e7eb;
+
+// --- Toolbar ---
+.app-toolbar {
+  height: $toolbar-height;
+  background: #ffffff !important;
+  border-bottom: 1px solid $border;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  color: #111827 !important;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .brand-icon {
+      color: $primary;
+      font-size: 22px;
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #111827;
+    }
+  }
+
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $text-muted;
+    font-size: 13.5px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 6px 12px;
+    transition: background 0.15s, color 0.15s;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background: #f3f4f6;
+      color: #111827;
+    }
+  }
+}
+
+// --- Layout ---
 .layout-container {
-  height: calc(100vh - 64px);
-}
-
-mat-sidenav {
-  width: 220px;
-
-  padding-top: 10px;
-}
-
-.content {
-  padding: 20px;
+  height: calc(100vh - #{$toolbar-height});
 }
 
 .spacer {
   flex: 1 1 auto;
+}
+
+// --- Sidenav ---
+.app-sidenav {
+  width: $sidebar-width;
+  border-right: 1px solid $border !important;
+  background: #fafafa !important;
+  box-shadow: none !important;
+
+  .nav-section-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    padding: 20px 20px 8px;
+  }
+
+  mat-nav-list {
+    padding-top: 0;
+
+    a[mat-list-item] {
+      margin: 2px 10px;
+      border-radius: 8px;
+      height: 44px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+
+      mat-icon {
+        color: #9ca3af;
+        font-size: 19px;
+        width: 19px;
+        height: 19px;
+        margin-right: 4px;
+        transition: color 0.15s;
+      }
+
+      &:hover {
+        background: #f3f4f6;
+        color: #111827;
+
+        mat-icon { color: #6b7280; }
+      }
+
+      &.active-link {
+        background: $primary-light;
+        color: $primary;
+
+        mat-icon { color: $primary; }
+      }
+    }
+  }
+}
+
+// --- Content ---
+.content {
+  padding: 28px 32px;
+  background: #f9fafb;
+  min-height: 100%;
 }
