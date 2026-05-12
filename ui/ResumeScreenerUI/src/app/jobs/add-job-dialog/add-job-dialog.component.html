@@ -60,6 +60,78 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="skills-section">
+
+    <div class="skills-header">
+      <h3>Required Skills</h3>
+      <button type="button" class="add-skill-btn" (click)="addSkill()">
+        + Add Skill
+      </button>
+    </div>
+    <div
+      formArrayName="skills">
+      <div class="skill-row" *ngFor=" let skill of skills.controls; let i = index " [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Skill
+          </mat-label>
+          <input
+            matInput
+            formControlName="skillName">
+
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline">
+
+          <mat-label>
+            Weight
+          </mat-label>
+
+          <input
+            type="number"
+
+            matInput
+
+            formControlName="weight">
+
+        </mat-form-field>
+
+        <mat-select
+          formControlName="isRequired">
+
+          <mat-option
+            [value]="true">
+
+            Required
+
+          </mat-option>
+
+          <mat-option
+            [value]="false">
+
+            Optional
+
+          </mat-option>
+
+        </mat-select>
+
+        <button
+          type="button"
+
+          class="remove-btn"
+
+          (click)="removeSkill(i)">
+
+          ✕
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
   </form>
 </mat-dialog-content>

@@ -1,6 +1,6 @@
 import { Component }from '@angular/core';
 import { CommonModule }from '@angular/common';
-import {  ReactiveFormsModule,  FormBuilder,  Validators} from '@angular/forms';
+import {  ReactiveFormsModule,  FormBuilder,  Validators,FormArray} from '@angular/forms';
 import {  MatDialogModule,  MatDialogRef} from '@angular/material/dialog';
 import {  MatFormFieldModule} from '@angular/material/form-field';
 import {  MatInputModule} from '@angular/material/input';
@@ -54,6 +54,7 @@ export class AddJobDialogComponent {
   )
   {
     this.jobForm = this.fb.group({
+      
 
       title: [
         '',
@@ -78,8 +79,42 @@ export class AddJobDialogComponent {
       status: [
         'Open',
         Validators.required
-      ]
+      ],
+      skills: this.fb.array([])
     });
+    this.addSkill();
+  }
+  get skills(): FormArray
+  {
+    return this.jobForm.get(
+      'skills'
+    ) as FormArray;
+  }
+  addSkill(): void
+  {
+    const skillForm =
+      this.fb.group({
+
+        skillName: [
+          '',
+          Validators.required
+        ],
+
+        weight: [
+          5,
+          Validators.required
+        ],
+
+        isRequired: [
+          true
+        ]
+      });
+
+    this.skills.push(skillForm);
+  }
+  removeSkill(index: number): void
+  {
+    this.skills.removeAt(index);
   }
 
   submit(): void

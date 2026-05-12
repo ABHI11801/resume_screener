@@ -123,3 +123,53 @@ $primary: #4f46e5;
     --mdc-circular-progress-active-indicator-color: white;
   }
 }
+.skills-section {
+  margin-top: 20px;
+}
+
+.skills-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 12px;
+}
+
+.skill-row {
+  display: grid;
+
+  grid-template-columns:
+    2fr 1fr 1fr auto;
+
+  gap: 12px;
+
+  align-items: center;
+
+  margin-bottom: 12px;
+}
+
+.add-skill-btn {
+  border: none;
+
+  background: transparent;
+
+  color: $primary;
+
+  cursor: pointer;
+
+  font-weight: 600;
+}
+
+.remove-btn {
+  border: none;
+
+  background: transparent;
+
+  color: #ef4444;
+
+  cursor: pointer;
+
+  font-size: 18px;
+}
